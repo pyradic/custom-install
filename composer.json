@@ -1,0 +1,18 @@
+{
+    "name": "pyradic/customizable-installer",
+    "require": {
+        "eddiriarte/console-select": "~2.0",
+        "laradic/support": "~2.0",
+        "anomaly/streams-platform": "~1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pyradic\\CustomizableInstaller\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
+    }
+}
