@@ -1,5 +1,8 @@
 {
     "name": "pyradic/custom-install",
+    "description": "Custom PyroCMS install",
+    "keywords": ["pyrocms"],
+    "license": "MIT",
     "require": {
         "eddiriarte/console-select": "~2.0",
         "laradic/support": "~2.0",

@@ -10,4 +10,16 @@ This package allows you to:
 - Thrown exceptions during installation will ask you if you want to continue to the next step or
 - Add PyroCMS add-ons as composer dependency without automatically installing them
 - Ignore trivial errors
-- Debug your
+- etc...
+
+
+Installation
+------------
+
+#### Provider
+```
+\Pyradic\CustomInstall\CustomInstallServiceProvider
+```
+
+#### Configuration
+Use the provided config
