@@ -34,15 +34,12 @@ class Installer
     protected $options;
     /** @var \Anomaly\Streams\Platform\Addon\AddonManager */
     protected $manager;
-    /** @var \Pyradic\CustomInstall\PlatformRc */
-    protected $rc;
 
     public function __construct(InstallerCollection $tasks, InstallerOptions $options, AddonManager $manager)
     {
         $this->tasks   = $tasks;
         $this->options = $options;
         $this->manager = $manager;
-        $this->rc = $this->dispatchNow(new GetPlatformRc());
     }
 
     public function add(InstallerTask $task)
@@ -128,7 +125,7 @@ class Installer
         // $this->dispatchNow(new LoadExtensionSeeders($installers));
         /* @var Extension $extension */
         foreach ($extensions as $extension) {
-            if ($this->rc->shouldSkipInstall($extension) || $this->rc->shouldSkipSeed($extension)) {
+            if ($this->options->shouldSkipInstall($extension) || $this->options->shouldSkipSeed($extension)) {
                 continue;
             }
             $this->add(
@@ -160,7 +157,7 @@ class Installer
         // $this->dispatchNow(new LoadModuleSeeders($installers));
         /* @var Module $module */
         foreach ($modules as $module) {
-            if ($this->rc->shouldSkipInstall($module) || $this->rc->shouldSkipSeed($module)) {
+            if ($this->options->shouldSkipInstall($module) || $this->options->shouldSkipSeed($module)) {
                 continue;
             }
             if ($module->getNamespace() === 'anomaly.module.installer') {
@@ -197,7 +194,7 @@ class Installer
         //        $this->dispatchNow(new LoadExtensionInstallers($installers));
         /* @var Extension $extension */
         foreach ($extensions as $extension) {
-            if ($this->rc->shouldSkipInstall($extension)) {
+            if ($this->options->shouldSkipInstall($extension)) {
                 continue;
             }
             $this->add(
@@ -233,7 +230,7 @@ class Installer
         //        $this->dispatchNow(new LoadModuleInstallers($installers));
         /* @var Module $module */
         foreach ($modules as $module) {
-            if ($this->rc->shouldSkipInstall($module)) {
+            if ($this->options->shouldSkipInstall($module)) {
                 continue;
             }
             if ($module->getNamespace() === 'anomaly.module.installer') {

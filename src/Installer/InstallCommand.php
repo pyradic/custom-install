@@ -1,13 +1,8 @@
 <?php namespace Pyradic\CustomInstall\Installer;
 
-use Laradic\Support\FS;
-use Laradic\Support\Wrap;
 use Illuminate\Console\Command;
-use Symfony\Component\Yaml\Yaml;
-use Pyradic\CustomInstall\Command\GetPlatformRc;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use EddIriarte\Console\Helpers\SelectionHelper;
 use Anomaly\Streams\Platform\Addon\AddonManager;
 use Anomaly\Streams\Platform\Support\Collection;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,69 +20,29 @@ class InstallCommand extends Command
 {
     use DispatchesJobs;
 
-    protected $signature = 'install 
-                                    {method=install : method name}
+    protected $name = 'install';
+    protected $signature2 = 'install 
+                                    {method=install : one of: install | list }
                                     {--ready : Indicates that the installer should use an existing .env file.}
     ';
 
-    /** @var \Pyradic\CustomInstall\PlatformRc */
-    protected $rc;
+    protected $description = 'Install PyroCMS';
 
     /** @var \Pyradic\CustomInstall\Installer\InstallerOptions */
-    protected $installerOptions;
+    protected $options;
 
     public function getInstallerOptions()
     {
-        if ($this->installerOptions === null) {
-            $this->installerOptions = new InstallerOptions();
+        if($this->options === null){
+            $this->options = app(InstallerOptions::class);
         }
-        return $this->installerOptions;
+        return $this->options;
     }
 
-    public function handle(Dispatcher $events, AddonManager $manager)
+    public function handle()
     {
-        $this->rc = $this->dispatchNow(new GetPlatformRc());
-        $this->getHelperSet()->set(new SelectionHelper($this->input, $this->output));
-        $method = $this->argument('method');
+        $method        = $this->argument('method');
         $this->laravel->call([ $this, $method ]);
-    }
-
-    public function ignore(ModuleCollection $modules, ExtensionCollection $extensions)
-    {
-        Wrap::dot([])->contains();
-//        Yaml::parseFile()
-        Yaml::dump([
-            'asdf' => 'sad',
-            'rew' => [
-                '34','efg'
-            ],
-            'bool' =>true
-        ]);
-        $filePath = base_path('.platformrc');
-        if (FS::exists($filePath) && $this->confirm('A .platformrc file already exists in your project root. Do you wish to override it?', false)) {
-            $backupFilePath = $filePath . '.bak';
-            if (FS::exists($backupFilePath)) {
-                FS::delete($backupFilePath);
-                $this->line('Removed old backup file: ' . $backupFilePath);
-            }
-            FS::copy($filePath, $filePath . '.bak');
-            $this->line('Backed up current .platformrc to: ' . $backupFilePath);
-            FS::delete($filePath);
-        }
-        $data = [ 'ignore' => [] ];
-        if ($this->confirm('Do you wish to add any <fg=blue>modules</> to the ignore?')) {
-            $ignoreModules    = $this->select('Select <fg=blue>modules</> to add to the ignore', $modules->toBase()->map->getNamespace()->toArray());
-            $data[ 'ignore' ] = array_merge($data[ 'ignore' ], $ignoreModules);
-        }
-        if ($this->confirm('Do you wish to add any <fg=green>extensions</> to the ignore?')) {
-            $ignoreExtensions = $this->select('Select <fg=green>extensions</> to add to the ignore', $extensions->toBase()->map->getNamespace()->toArray());
-            $data[ 'ignore' ] = array_merge($data[ 'ignore' ], $ignoreExtensions);
-        }
-
-        $json = json_encode($data, null, 4);
-        FS::put($filePath, $json);
-        $this->line('Alll done');
-        return;
     }
 
     public function list(ModuleCollection $modules, ExtensionCollection $extensions)

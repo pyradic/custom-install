@@ -50,7 +50,6 @@ class RunInstallers
      * handle method
      *
      * @param \Illuminate\Contracts\Container\Container $container
-     *
      * @return void
      * @throws \Throwable
      */
@@ -62,9 +61,9 @@ class RunInstallers
 
         /* @var InstallerTask $installer */
         while ($installer = $this->installers->shift()) {
-            if ($this->step < $this->installerOptions->start_from_step || in_array($this->step, $this->installerOptions->skip_steps)) {
+            if ($this->installerOptions->shouldSkipStep($this->step)) {
                 if ($this->command) {
-                    $this->command->warn("{$this->step}/{$this->total} Skipped ". trans($installer->getMessage()));
+                    $this->command->warn("{$this->step}/{$this->total} Skipped " . trans($installer->getMessage()));
                 }
                 $this->step++;
                 continue;

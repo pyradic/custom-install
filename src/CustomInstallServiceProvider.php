@@ -13,15 +13,17 @@ class CustomInstallServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(dirname(__DIR__) . '/config/custom_install.php', 'custom_install');
-        $this->app->register(\EddIriarte\Console\Providers\SelectServiceProvider::class);
+
+        $this->app->singleton('custom_install.options', function () {
+            return new InstallerOptions($this->app[ 'config' ][ 'custom_install' ]);
+        });
+        $this->app->alias('custom_install.options', InstallerOptions::class);
+
 
         $this->app->extend(\Anomaly\Streams\Platform\Installer\Console\Install::class, function ($command) {
             return $this->app->make(Installer\InstallCommand::class);
         });
 
-        $this->app->singleton('custom_install.options', function(){
-            new InstallerOptions()
-        });
     }
 
     public function boot()
