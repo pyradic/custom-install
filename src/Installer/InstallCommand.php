@@ -1,20 +1,20 @@
-<?php namespace Pyradic\CustomInstall\Installer;
+<?php namespace Pyro\CustomInstall\Installer;
 
+use Anomaly\Streams\Platform\Addon\AddonManager;
+use Anomaly\Streams\Platform\Addon\Extension\ExtensionCollection;
+use Anomaly\Streams\Platform\Addon\Module\ModuleCollection;
+use Anomaly\Streams\Platform\Application\Command\WriteEnvironmentFile;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetAdminData;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetApplicationData;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabaseData;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetOtherData;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetStreamsData;
+use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Anomaly\Streams\Platform\Addon\AddonManager;
-use Anomaly\Streams\Platform\Support\Collection;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Anomaly\Streams\Platform\Addon\Module\ModuleCollection;
-use Anomaly\Streams\Platform\Addon\Extension\ExtensionCollection;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetAdminData;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetOtherData;
-use Anomaly\Streams\Platform\Application\Command\WriteEnvironmentFile;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetStreamsData;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabaseData;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetApplicationData;
+use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
 {
@@ -28,7 +28,7 @@ class InstallCommand extends Command
 
     protected $description = 'Install PyroCMS';
 
-    /** @var \Pyradic\CustomInstall\Installer\InstallerOptions */
+    /** @var \Pyro\CustomInstall\Installer\InstallerOptions */
     protected $options;
 
     public function getInstallerOptions()

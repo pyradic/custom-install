@@ -1,10 +1,10 @@
 <?php /** @noinspection PhpHierarchyChecksInspection */
 
-namespace Pyradic\CustomInstall\Installer;
+namespace Pyro\CustomInstall\Installer;
 
 
-use Illuminate\Support\Collection;
 use Anomaly\Streams\Platform\Addon\Addon;
+use Illuminate\Support\Collection;
 
 /**
  * @property int[]|Collection    $skip_steps

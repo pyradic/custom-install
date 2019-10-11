@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyradic\CustomInstall\Installer;
+namespace Pyro\CustomInstall\Installer;
 
 use Closure;
 

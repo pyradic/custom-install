@@ -1,5 +1,5 @@
 {
-    "name": "pyradic/custom-install",
+    "name": "pyro/custom-install",
     "description": "Custom PyroCMS install",
     "keywords": ["pyrocms"],
     "license": "MIT",
@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pyradic\\CustomInstall\\": "src"
+            "Pyro\\CustomInstall\\": "src"
         }
     },
     "extra": {

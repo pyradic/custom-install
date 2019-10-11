@@ -1,13 +1,13 @@
 <?php
 
-namespace Pyradic\CustomInstall\Installer;
+namespace Pyro\CustomInstall\Installer;
 
 
-use Illuminate\Console\Command;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Container\Container;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Anomaly\Streams\Platform\Installer\InstallerCollection;
+use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class RunInstallers
 {
@@ -30,7 +30,7 @@ class RunInstallers
     protected $step;
     /** @var int */
     protected $total;
-    /** @var \Pyradic\CustomInstall\Installer\InstallerOptions */
+    /** @var \Pyro\CustomInstall\Installer\InstallerOptions */
     protected $installerOptions;
 
     /**

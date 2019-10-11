@@ -1,28 +1,28 @@
 <?php
 
-namespace Pyradic\CustomInstall\Installer;
+namespace Pyro\CustomInstall\Installer;
 
-use Illuminate\Console\Command;
-use Pyradic\CustomInstall\Command\GetPlatformRc;
-use Anomaly\Streams\Platform\Console\Kernel;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Anomaly\Streams\Platform\Addon\AddonManager;
-use Anomaly\Streams\Platform\Addon\Module\Module;
-use Anomaly\Streams\Platform\Application\Application;
 use Anomaly\Streams\Platform\Addon\Extension\Extension;
-use Anomaly\Streams\Platform\Installer\InstallerCollection;
-use Anomaly\Streams\Platform\Addon\Module\ModuleCollection;
-use Anomaly\Streams\Platform\Entry\Command\AutoloadEntryModels;
 use Anomaly\Streams\Platform\Addon\Extension\ExtensionCollection;
-use Anomaly\Streams\Platform\Application\Command\ReloadEnvironmentFile;
+use Anomaly\Streams\Platform\Addon\Module\Module;
+use Anomaly\Streams\Platform\Addon\Module\ModuleCollection;
+use Anomaly\Streams\Platform\Application\Application;
 use Anomaly\Streams\Platform\Application\Command\InitializeApplication;
-use Anomaly\Streams\Platform\Installer\Console\Command\LoadBaseSeeders;
-use Anomaly\Streams\Platform\Installer\Console\Command\ConfigureDatabase;
-use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabasePrefix;
 use Anomaly\Streams\Platform\Application\Command\LoadEnvironmentOverrides;
-use Anomaly\Streams\Platform\Installer\Console\Command\LoadCoreInstallers;
-use Anomaly\Streams\Platform\Installer\Console\Command\LoadBaseMigrations;
+use Anomaly\Streams\Platform\Application\Command\ReloadEnvironmentFile;
+use Anomaly\Streams\Platform\Console\Kernel;
+use Anomaly\Streams\Platform\Entry\Command\AutoloadEntryModels;
+use Anomaly\Streams\Platform\Installer\Console\Command\ConfigureDatabase;
 use Anomaly\Streams\Platform\Installer\Console\Command\LoadApplicationInstallers;
+use Anomaly\Streams\Platform\Installer\Console\Command\LoadBaseMigrations;
+use Anomaly\Streams\Platform\Installer\Console\Command\LoadBaseSeeders;
+use Anomaly\Streams\Platform\Installer\Console\Command\LoadCoreInstallers;
+use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabasePrefix;
+use Anomaly\Streams\Platform\Installer\InstallerCollection;
+use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Pyro\CustomInstall\Command\GetPlatformRc;
 
 class Installer
 {
@@ -30,7 +30,7 @@ class Installer
 
     /** @var \Anomaly\Streams\Platform\Installer\InstallerCollection */
     protected $tasks;
-    /** @var \Pyradic\CustomInstall\Installer\InstallerOptions */
+    /** @var \Pyro\CustomInstall\Installer\InstallerOptions */
     protected $options;
     /** @var \Anomaly\Streams\Platform\Addon\AddonManager */
     protected $manager;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Pyradic\CustomInstall;
+namespace Pyro\CustomInstall;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Pyradic\CustomInstall\Installer\InstallerOptions;
+use Illuminate\Support\ServiceProvider;
+use Pyro\CustomInstall\Installer\InstallerOptions;
 
 class CustomInstallServiceProvider extends ServiceProvider
 {
