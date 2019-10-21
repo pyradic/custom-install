@@ -129,7 +129,7 @@ class Installer
             }
             $this->add(
                 InstallerTask::seed(
-                    trans('streams::installer.seeding', [ 'seeding' => trans($extension->getName()) ]),
+                    trans('streams::installer.seeding', [ 'seeding' => trans($extension->getName()) ]) . " <comment>{$extension->getNamespace()}</comment>",
                     function (Kernel $console) use ($extension) {
                         $console->call(
                             'db:seed',
@@ -165,7 +165,7 @@ class Installer
 
             $this->add(
                 InstallerTask::seed(
-                    trans('streams::installer.seeding', [ 'seeding' => trans($module->getName()) ]),
+                    trans('streams::installer.seeding', [ 'seeding' => trans($module->getName()) ]) . " <comment>{$module->getNamespace()}</comment>",
                     function (Kernel $console) use ($module) {
                         $console->call(
                             'db:seed',
