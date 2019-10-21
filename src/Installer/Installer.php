@@ -22,7 +22,6 @@ use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabasePrefix;
 use Anomaly\Streams\Platform\Installer\InstallerCollection;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Pyro\CustomInstall\Command\GetPlatformRc;
 
 class Installer
 {
