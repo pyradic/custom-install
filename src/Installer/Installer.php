@@ -29,8 +29,10 @@ class Installer
 
     /** @var \Anomaly\Streams\Platform\Installer\InstallerCollection */
     protected $tasks;
+
     /** @var \Pyro\CustomInstall\Installer\InstallerOptions */
     protected $options;
+
     /** @var \Anomaly\Streams\Platform\Addon\AddonManager */
     protected $manager;
 
@@ -67,7 +69,7 @@ class Installer
 
     protected function load()
     {
-        if($this->loaded){
+        if ($this->loaded) {
             return $this;
         }
         $this->dispatchNow(new ReloadEnvironmentFile());
@@ -105,11 +107,14 @@ class Installer
         app()->call([ $this, 'loadModuleSeeders' ]);
         app()->call([ $this, 'loadExtensionSeeders' ]);
 
-        $this->dispatchNow(new LoadBaseMigrations($tasks));
-        $this->dispatchNow(new LoadBaseSeeders($tasks));
+        if ($this->options->shouldMigrateBase()) {
+            $this->dispatchNow(new LoadBaseMigrations($tasks));
+        }
+        if ($this->options->shouldSeedBase()) {
+            $this->dispatchNow(new LoadBaseSeeders($tasks));
+        }
         return $this;
     }
-
 
 
     /**

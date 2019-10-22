@@ -1,4 +1,4 @@
-<?php namespace Pyro\CustomInstall\Installer;
+<?php namespace Pyro\CustomInstall\Console;
 
 use Anomaly\Streams\Platform\Addon\AddonManager;
 use Anomaly\Streams\Platform\Addon\Extension\ExtensionCollection;
@@ -13,6 +13,8 @@ use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Pyro\CustomInstall\Installer\Installer;
+use Pyro\CustomInstall\Installer\InstallerOptions;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
