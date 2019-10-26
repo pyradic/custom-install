@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'call_before'          => [],
+    'dispatch_before'      => [],
+    'call_after'           => [],
+    'dispatch_after'       => [],
     'skip_steps'           => [],
     'start_from_step'      => 1,
     'ignore_exceptions'    => false,

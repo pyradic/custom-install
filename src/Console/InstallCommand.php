@@ -23,6 +23,7 @@ class InstallCommand extends Command
     use DispatchesJobs;
 
     protected $name = 'install';
+
     protected $signature2 = 'install 
                                     {method=install : one of: install | list }
                                     {--ready : Indicates that the installer should use an existing .env file.}
@@ -35,7 +36,7 @@ class InstallCommand extends Command
 
     public function getInstallerOptions()
     {
-        if($this->options === null){
+        if ($this->options === null) {
             $this->options = app(InstallerOptions::class);
         }
         return $this->options;
@@ -43,7 +44,7 @@ class InstallCommand extends Command
 
     public function handle()
     {
-        $method        = $this->argument('method');
+        $method = $this->argument('method');
         $this->laravel->call([ $this, $method ]);
     }
 
@@ -91,16 +92,23 @@ class InstallCommand extends Command
         $data = new Collection();
 
         if ( ! $this->option('ready')) {
-
 //            $this->dispatchNow(new ConfirmLicense($this));
             $this->dispatchNow(new SetStreamsData($data));
             $this->dispatchNow(new SetDatabaseData($data, $this));
             $this->dispatchNow(new SetApplicationData($data, $this));
             $this->dispatchNow(new SetAdminData($data, $this));
             $this->dispatchNow(new SetOtherData($data, $this));
-
             $this->dispatchNow(new WriteEnvironmentFile($data->all()));
         }
+
+        $options = $this->resolveInstallerOptions($installer);
+        $this->callOptionsCallback($options->call_before);
+        $installer->run($this);
+        $this->callOptionsCallback($options->call_after);
+    }
+
+    protected function resolveInstallerOptions(Installer $installer)
+    {
         $options = $installer->getOptions();
         foreach ($options as $key => $default) {
             $value = $this->option($key);
@@ -111,7 +119,18 @@ class InstallCommand extends Command
             }
             $options->put($key, $value);
         }
-        $installer->run($this);
+        return $options;
+    }
+
+    protected function callOptionsCallback($callbacks)
+    {
+        foreach ($callbacks as $call) {
+            [$command, $arguments] = $call;
+            if (is_int($command)) {
+                $command = $arguments;
+            }
+            $this->call($command, $arguments);
+        }
     }
 
     /**

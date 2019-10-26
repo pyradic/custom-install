@@ -21,6 +21,7 @@ use Anomaly\Streams\Platform\Installer\Console\Command\LoadCoreInstallers;
 use Anomaly\Streams\Platform\Installer\Console\Command\SetDatabasePrefix;
 use Anomaly\Streams\Platform\Installer\InstallerCollection;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class Installer
@@ -36,11 +37,15 @@ class Installer
     /** @var \Anomaly\Streams\Platform\Addon\AddonManager */
     protected $manager;
 
-    public function __construct(InstallerCollection $tasks, InstallerOptions $options, AddonManager $manager)
+    /** @var \Illuminate\Contracts\Container\Container */
+    private $container;
+
+    public function __construct(InstallerCollection $tasks, InstallerOptions $options, AddonManager $manager, Container $container)
     {
-        $this->tasks   = $tasks;
-        $this->options = $options;
-        $this->manager = $manager;
+        $this->tasks     = $tasks;
+        $this->options   = $options;
+        $this->manager   = $manager;
+        $this->container = $container;
     }
 
     public function add(InstallerTask $task)
@@ -59,10 +64,20 @@ class Installer
         return $this->tasks;
     }
 
+    protected function dispatchJob($job)
+    {
+        if (is_callable($job)) {
+            $job = $this->container->call($job);
+        }
+        $this->dispatchNow($job);
+    }
+
     public function run(Command $command = null)
     {
+        $this->options->dispatch_before->call([$this,'dispatchJob]']);
         $this->load();
         $this->dispatchNow(new RunInstallers($this->tasks, $this->options, $command));
+        $this->options->dispatch_after->call([$this,'dispatchJob]']);
     }
 
     protected $loaded;

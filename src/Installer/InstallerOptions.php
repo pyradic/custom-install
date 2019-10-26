@@ -7,6 +7,10 @@ use Anomaly\Streams\Platform\Addon\Addon;
 use Illuminate\Support\Collection;
 
 /**
+ * @property string[]|Collection $call_before
+ * @property string[]|Collection $dispatch_before
+ * @property string[]|Collection $call_after
+ * @property string[]|Collection $dispatch_after
  * @property int[]|Collection    $skip_steps
  * @property int                 $start_from_step
  * @property bool                $ignore_exceptions
@@ -23,7 +27,17 @@ class InstallerOptions extends Collection
     public function __construct($items = [])
     {
         $items = array_replace($this->loadDefaults(), $items);
-        foreach ([ 'skip_steps', 'skip_install', 'skip_seed', 'include', 'exclude', 'skip_base_migrations', 'skip_base_seeds' ] as $k) {
+        foreach ([
+                     'call_before',
+                     'dispatch_before',
+                     'call_after',
+                     'dispatch_after',
+                     'skip_steps',
+                     'skip_install',
+                     'skip_seed',
+                     'include',
+                     'exclude',
+                 ] as $k) {
             $items[ $k ] = collect($items[ $k ]);
         }
         parent::__construct($items);
@@ -32,6 +46,10 @@ class InstallerOptions extends Collection
     public function loadDefaults()
     {
         return [
+            'call_before'          => [],
+            'dispatch_before'      => [],
+            'call_after'           => [],
+            'dispatch_after'       => [],
             'skip_steps'           => [],
             'start_from_step'      => 1,
             'ignore_exceptions'    => false,
