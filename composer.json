@@ -1,6 +1,6 @@
 {
     "name": "pyro/custom-install",
-    "description": "Custom PyroCMS install",
+    "description": "Provides extra PyroCMS install configurables, actions and commands. Exclude/Include modules, extensions or seeds from being installed, hooks, callbacks etc",
     "keywords": ["pyrocms"],
     "license": "MIT",
     "require": {
