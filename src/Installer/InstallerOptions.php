@@ -33,7 +33,6 @@ class InstallerOptions extends Collection
                      'call_after',
                      'dispatch_after',
                      'skip_steps',
-                     'skip_install',
                      'skip_seed',
                      'include',
                      'exclude',
@@ -53,7 +52,6 @@ class InstallerOptions extends Collection
             'skip_steps'           => [],
             'start_from_step'      => 1,
             'ignore_exceptions'    => false,
-            'skip_install'         => [],
             'skip_seed'            => [],
             'include'              => [],
             'exclude'              => [],
@@ -82,9 +80,6 @@ class InstallerOptions extends Collection
             return true;
         }
         if ($this->exclude->hasString($namespace)) {
-            return false;
-        }
-        if ($this->skip_install->hasString($namespace)) {
             return false;
         }
         return true;

@@ -18,6 +18,10 @@ class UninstallCommand extends Command
         if ( ! $this->confirmToProceed()) {
             return;
         }
+        $this->info('Setting INSTALLED to false');
+        $this->call('env:set', [ 'line' => 'INSTALLED=false' ]);
+
+
         $db     = $this->getLaravel()->make('db');
         $schema = $db->getDoctrineSchemaManager();
         foreach ($schema->listViews() as $view) {
@@ -29,8 +33,6 @@ class UninstallCommand extends Command
             $schema->dropTable($table->getName());
         }
         $this->info('Truncated database');
-        $this->info('Setting INSTALLED to false');
-        $this->call('env:set', [ 'line' => 'INSTALLED=false' ]);
         $this->info('Application uninstalled');
     }
 }
