@@ -2,11 +2,11 @@
 
 namespace Pyro\CustomInstall\Installer;
 
-
 use Anomaly\Streams\Platform\Installer\InstallerCollection;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class RunInstallers
@@ -26,10 +26,13 @@ class RunInstallers
      * @var InstallerCollection
      */
     protected $installers;
+
     /** @var int */
     protected $step;
+
     /** @var int */
     protected $total;
+
     /** @var \Pyro\CustomInstall\Installer\InstallerOptions */
     protected $installerOptions;
 
@@ -50,6 +53,7 @@ class RunInstallers
      * handle method
      *
      * @param \Illuminate\Contracts\Container\Container $container
+     *
      * @return void
      * @throws \Throwable
      */
@@ -57,7 +61,6 @@ class RunInstallers
     {
         $this->step  = 1;
         $this->total = $this->installers->count();
-
 
         /* @var InstallerTask $installer */
         while ($installer = $this->installers->shift()) {
@@ -91,6 +94,11 @@ class RunInstallers
             $this->command->error('The installer threw an exception: ' . $e->getMessage());
             if ( ! $this->command->confirm('Should the installer ignore this and continue?', $this->installerOptions->ignore_exceptions)) {
                 throw $e;
+            } else {
+                Log::error(
+                    $e->getMessage(),
+                    [ 'exception' => $e ]
+                );
             }
         } else {
             throw $e;
