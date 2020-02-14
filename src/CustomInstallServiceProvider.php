@@ -4,6 +4,7 @@ namespace Pyro\CustomInstall;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\ServiceProvider;
+use Pyro\CustomInstall\Console\AddonRegisterCommand;
 use Pyro\CustomInstall\Console\UninstallCommand;
 use Pyro\CustomInstall\Installer\InstallerOptions;
 
@@ -31,6 +32,7 @@ class CustomInstallServiceProvider extends ServiceProvider
         $commands  = [];
         $installed = env('INSTALLED') === true;
         $this->app->singleton($commands[] = 'command.platform.uninstall', UninstallCommand::class);
+        $this->app->singleton($commands[] = 'command.platform.addon.register', AddonRegisterCommand::class);
 
         $this->app->extend(\Anomaly\Streams\Platform\Installer\Console\Install::class, function ($command) {
             return $this->app->make(Console\InstallCommand::class);
