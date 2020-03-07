@@ -24,9 +24,7 @@ class InstallCommand extends Command
 
     protected $name = 'install';
 
-    protected $signature2 = 'install 
-                                    {method=install : one of: install | list }
-                                    {--ready : Indicates that the installer should use an existing .env file.}
+    protected $signature2 = 'install {--ready : Indicates that the installer should use an existing .env file.}
     ';
 
     protected $description = 'Install PyroCMS';
