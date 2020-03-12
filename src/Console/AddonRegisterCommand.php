@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class AddonRegisterCommand extends Command
 {
-    protected $signature = 'addon:register';
+    protected $signature = 'addon:_register';
 
     protected $description = 'register all addons (internal command)';
 
