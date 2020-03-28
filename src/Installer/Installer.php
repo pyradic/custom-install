@@ -74,10 +74,10 @@ class Installer
 
     public function run(Command $command = null)
     {
-        $this->options->dispatch_before->call([$this,'dispatchJob]']);
+        $this->options->dispatch_before->call([ $this, 'dispatchJob]' ]);
         $this->load();
         $this->dispatchNow(new RunInstallers($this->tasks, $this->options, $command));
-        $this->options->dispatch_after->call([$this,'dispatchJob]']);
+        $this->options->dispatch_after->call([ $this, 'dispatchJob]' ]);
     }
 
     protected $loaded;
@@ -119,8 +119,10 @@ class Installer
             )
         );
 
-        app()->call([ $this, 'loadModuleSeeders' ]);
-        app()->call([ $this, 'loadExtensionSeeders' ]);
+        if ( ! $this->options->shouldSkipSeeds()) {
+            app()->call([ $this, 'loadModuleSeeders' ]);
+            app()->call([ $this, 'loadExtensionSeeders' ]);
+        }
 
         if ($this->options->shouldMigrateBase()) {
             $this->dispatchNow(new LoadBaseMigrations($tasks));
@@ -130,7 +132,6 @@ class Installer
         }
         return $this;
     }
-
 
     /**
      * loadExtensionSeeders method

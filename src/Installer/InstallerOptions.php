@@ -2,7 +2,6 @@
 
 namespace Pyro\CustomInstall\Installer;
 
-
 use Anomaly\Streams\Platform\Addon\Addon;
 use Illuminate\Support\Collection;
 
@@ -15,7 +14,9 @@ use Illuminate\Support\Collection;
  * @property int                 $start_from_step
  * @property bool                $ignore_exceptions
  * @property string[]|Collection $skip_install
- * @property string[]|Collection $skip_seed
+ * @property string[]|Collection $include_seed
+ * @property string[]|Collection $exclude_seed
+ * @property boolean             $skip_seeds
  * @property string[]|Collection $include
  * @property string[]|Collection $exclude
  * @property bool                $skip_base_migrations
@@ -52,11 +53,13 @@ class InstallerOptions extends Collection
             'skip_steps'           => [],
             'start_from_step'      => 1,
             'ignore_exceptions'    => false,
-            'skip_seed'            => [],
             'include'              => [],
             'exclude'              => [],
             'skip_base_migrations' => false,
             'skip_base_seeds'      => false,
+            'skip_seeds'           => false,
+            'include_seed'         => [],
+            'exclude_seed'         => [],
         ];
     }
 
@@ -88,7 +91,13 @@ class InstallerOptions extends Collection
     public function shouldSeed($addon)
     {
         $namespace = $this->resolveNamespace($addon);
-        if ($this->skip_seed->hasString($namespace)) {
+        if ($this->skip_seeds) {
+            return false;
+        }
+        if ($this->include_seed->hasString($namespace)) {
+            return true;
+        }
+        if ($this->exclude_seed->hasString($namespace)) {
             return false;
         }
         return true;
@@ -123,6 +132,11 @@ class InstallerOptions extends Collection
         return false === $this->shouldSeed($addon);
     }
 
+    public function shouldSkipSeeds()
+    {
+        return true === $this->skip_seeds;
+    }
+
     public function shouldSkipBaseMigrations()
     {
         return $this->skip_base_migrations;
@@ -142,6 +156,5 @@ class InstallerOptions extends Collection
     {
         return false === $this->shouldSkipBaseSeeds();
     }
-
 
 }
