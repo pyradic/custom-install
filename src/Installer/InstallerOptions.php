@@ -34,9 +34,10 @@ class InstallerOptions extends Collection
                      'call_after',
                      'dispatch_after',
                      'skip_steps',
-                     'skip_seed',
                      'include',
                      'exclude',
+                     'include_seed',
+                     'exclude_seed',
                  ] as $k) {
             $items[ $k ] = collect($items[ $k ]);
         }
